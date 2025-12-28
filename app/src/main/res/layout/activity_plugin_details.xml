@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="18dp"
+    android:gravity="center_horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Налаштування плагіну"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Обраний регіон:"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/current_region_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Не обрано"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <CheckBox
+        android:id="@+id/show_when_no_alert_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Показувати плагін, коли немає тривоги"
+        android:layout_marginBottom="24dp"/>
+
+
+    <Button
+        android:id="@+id/select_region_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вибрати регіон"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Закрити"
+        style="@style/Widget.AppCompat.Button" />
+</LinearLayout>
+</ScrollView>
