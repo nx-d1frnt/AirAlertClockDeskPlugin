@@ -15,7 +15,7 @@
         android:theme="@style/Theme.ExampleClockDeskPlugin" >
 
         <activity
-            android:name=".ExamplePluginDetailsActivity"
+            android:name=".AlertPluginDetailsActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.DayNight.Dialog"/>
 

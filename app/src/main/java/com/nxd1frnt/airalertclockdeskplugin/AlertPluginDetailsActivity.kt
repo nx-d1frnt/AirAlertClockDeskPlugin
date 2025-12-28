@@ -16,7 +16,7 @@ import org.json.JSONObject
 // Модель данных остается той же
 data class Region(val id: String, val name: String)
 
-class ExamplePluginDetailsActivity : AppCompatActivity() {
+class AlertPluginDetailsActivity : AppCompatActivity() {
 
     private lateinit var currentRegionTextView: TextView
     private lateinit var showstatecheck: CheckBox
