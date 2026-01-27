@@ -2,6 +2,9 @@ package com.nxd1frnt.airalertclockdeskplugin
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
@@ -12,6 +15,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 
 // Модель данных остается той же
 data class Region(val id: String, val name: String)
@@ -23,7 +28,41 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
     private val regionsList = mutableListOf<Region>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
+        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+
+        val surfaceColor = getColor(R.color.md_theme_surface)
+
+        window.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            addTarget(R.id.dialog_card)
+            duration = 400L
+            scrimColor = android.graphics.Color.TRANSPARENT
+            setAllContainerColors(surfaceColor)
+            containerColor = surfaceColor
+            startContainerColor = surfaceColor
+            endContainerColor = surfaceColor
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+        }
+
+        window.sharedElementReturnTransition = MaterialContainerTransform().apply {
+            addTarget(R.id.dialog_card)
+            duration = 300L
+            scrimColor = android.graphics.Color.TRANSPARENT
+            setAllContainerColors(surfaceColor)
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+        }
+
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                )
         setContentView(R.layout.activity_plugin_details)
 
         currentRegionTextView = findViewById(R.id.current_region_text)
@@ -31,14 +70,13 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
         val selectButton = findViewById<Button>(R.id.select_region_button)
         val closeButton = findViewById<Button>(R.id.close_button)
 
-        // 1. Загрузить текущий выбор
         updateCurrentRegionText()
 
-        // 2. Загрузить JSON в фоновом режиме (с новой логикой)
         loadRegionsFromJson()
 
-        // 3. Установить слушатели
-        closeButton.setOnClickListener { finish() }
+        closeButton.setOnClickListener {
+            finishAfterTransition()
+        }
         selectButton.setOnClickListener {
             showRegionSelectionDialog()
         }

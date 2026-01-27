@@ -1,58 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="18dp"
-    android:gravity="center_horizontal">
-    <TextView
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/dialog_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Налаштування плагіну"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+        android:layout_gravity="center"
+        android:transitionName="shared_chip_container"
+        app:cardBackgroundColor="@color/md_theme_surface"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="8dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Обраний регіон:"
-        android:textSize="16sp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/current_region_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Не обрано"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-    <CheckBox
-        android:id="@+id/show_when_no_alert_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Показувати плагін, коли немає тривоги"
-        android:layout_marginBottom="24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:text="Налаштування плагіну"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Обраний регіон:"
+                    android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/select_region_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Вибрати регіон"
-        android:paddingStart="32dp"
-        android:paddingEnd="32dp"
-        android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:id="@+id/current_region_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Не обрано"
+                    android:textAlignment="center"
+                    android:maxLength="35"
+                    android:ellipsize="end"
+                    android:singleLine="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/close_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Закрити"
-        style="@style/Widget.AppCompat.Button" />
-</LinearLayout>
-</ScrollView>
+                <CheckBox
+                    android:id="@+id/show_when_no_alert_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:text="Показувати плагін, коли немає тривоги" />
+
+                <Button
+                    android:id="@+id/select_region_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:textColor="@color/md_theme_onPrimary"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Вибрати регіон" />
+
+                <Button
+                    android:id="@+id/close_button"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Закрити"
+                    android:layout_gravity="center"
+                    android:textColor="@color/md_theme_primary"
+                    />
+            </LinearLayout>
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>
