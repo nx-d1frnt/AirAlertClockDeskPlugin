@@ -83,6 +83,10 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
         showstatecheck.setOnCheckedChangeListener { _, isChecked ->
             SirenSharedPreferences.saveShowstate(this, isChecked)
         }
+        val rootScrim = findViewById<android.view.View>(R.id.root_scrim)
+        rootScrim.setOnClickListener {
+            finishAfterTransition()
+        }
     }
 
     private fun updateCurrentRegionText() {
