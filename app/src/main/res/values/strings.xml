@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Air Alert ClockDesk Plugin</string>
+    <string name="plugin_name">Повітряні тривоги</string>
+    <string name="plugin_description">Плагін для моніторингу тривог через API siren.pp.ua</string>
+    <string name="settings_title">Налаштування</string>
+    <string name="region_monitoring">Регіон для моніторингу</string>
+    <string name="not_selected">Не обрано</string>
+    <string name="click_to_change">Натисніть, щоб змінити</string>
+    <string name="appearance">Відображення</string>
+    <string name="show_no_alert">Показувати, коли немає тривоги</string>
+    <string name="api_footer">Плагін отримує дані з siren.pp.ua</string>
+    <string name="select_region_title">Оберіть регіон</string>
+    <string name="cancel">Скасувати</string>
+    <string name="status_title">Статус тривоги</string>
+    <string name="region_prefix">Регіон: %1$s</string>
+    <string name="close">Закрити</string>
 </resources>

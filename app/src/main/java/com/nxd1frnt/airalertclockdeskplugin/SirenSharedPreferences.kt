@@ -1,6 +1,5 @@
 package com.nxd1frnt.airalertclockdeskplugin
 
-import android.R
 import android.content.Context
 
 object SirenSharedPreferences {
@@ -12,15 +11,11 @@ object SirenSharedPreferences {
     private const val KEY_SHOW_WHEN_NO_ALERT = "no_alert_show"
     private const val KEY_SELECTED_REGION_ID = "selected_region_id"
     private const val KEY_SELECTED_REGION_NAME = "selected_region_name"
-
-    // --- НОВЫЙ КЛЮЧ ---
     private const val KEY_LAST_NETWORK_REQUEST_TIME = "last_network_request_time"
 
 
     private fun getPrefs(context: Context) =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-
-    // ... (getChipText, getChipIcon, saveSelectedRegion, getSelectedRegionId, getSelectedRegionName... остаются без изменений) ...
 
     fun saveSirenState(context: Context, text: String, icon: String) {
         getPrefs(context).edit()
@@ -28,8 +23,6 @@ object SirenSharedPreferences {
             .putString(KEY_CHIP_ICON, icon)
             .apply()
     }
-
-    // --- НОВЫЕ МЕТОДЫ ДЛЯ ВРЕМЕНИ ---
 
     fun saveLastNetworkRequestTime(context: Context, timeMillis: Long) {
         getPrefs(context).edit()
@@ -41,8 +34,6 @@ object SirenSharedPreferences {
         return getPrefs(context).getLong(KEY_LAST_NETWORK_REQUEST_TIME, 0L)
     }
 
-    // --- Методы для НАСТРОЕК ПОЛЬЗОВАТЕЛЯ ---
-    // (Остаются без изменений)
     fun saveSelectedRegion(context: Context, regionId: String, regionName: String) {
         getPrefs(context).edit()
             .putString(KEY_SELECTED_REGION_ID, regionId)
@@ -64,7 +55,7 @@ object SirenSharedPreferences {
     }
 
     fun getSelectedRegionName(context: Context): String {
-        return getPrefs(context).getString(KEY_SELECTED_REGION_NAME, "Не выбрано") ?: "Не выбрано"
+        return getPrefs(context).getString(KEY_SELECTED_REGION_NAME, context.getString(R.string.not_selected)) ?: context.getString(R.string.not_selected)
     }
 
     fun getChipText(context: Context): String {
