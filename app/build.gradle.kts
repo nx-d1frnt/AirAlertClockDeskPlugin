@@ -14,8 +14,8 @@ android {
         applicationId = "com.nxd1frnt.airalertclockdeskplugin"
         minSdk = 21
         targetSdk = 36
-        versionCode = 12
-        versionName = "1.2"
+        versionCode = 13
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
