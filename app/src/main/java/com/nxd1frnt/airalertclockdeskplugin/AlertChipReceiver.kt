@@ -59,7 +59,11 @@ class AlertChipReceiver : BroadcastReceiver() {
     private fun performCheckLogic(selectedRegionId: String): Triple<String, String, Boolean> {
         return try {
             val url = "https://siren.pp.ua/api/v3/alerts/$selectedRegionId"
-            val responseString = URL(url).readText()
+            val connection = (URL(url).openConnection() as java.net.HttpURLConnection).apply {
+                connectTimeout = 5000
+                readTimeout = 5000
+            }
+            val responseString = connection.inputStream.bufferedReader().use { it.readText() }
 
             val jsonArray = JSONArray(responseString)
             val regionData = jsonArray.getJSONObject(0)
