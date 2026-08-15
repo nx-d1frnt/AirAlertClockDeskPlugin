@@ -93,7 +93,7 @@ class SettingsActivity : AppCompatActivity() {
                 }
 
             } catch (e: Exception) {
-                Log.e("SettingsActivity", "Помилка парсингу regions.json", e)
+                Log.e("SettingsActivity", "Error parsing regions.json", e)
             }
         }
     }
@@ -123,25 +123,25 @@ class SettingsActivity : AppCompatActivity() {
         val stateNames = statesData.map { it.name }.toTypedArray()
 
         AlertDialog.Builder(this)
-            .setTitle("Оберіть область")
+            .setTitle(R.string.select_region_title)
             .setItems(stateNames) { _, which ->
                 val selectedState = statesData[which]
                 if (selectedState.communities.isEmpty()) {
-                    // Наприклад, м. Київ - відразу зберігаємо
+                    // E.g., Kyiv city - save immediately
                     saveSelection(selectedState.id, selectedState.name)
                 } else {
-                    // Показуємо список громад
+                    // Show list of communities
                     showCommunitySelectionDialog(selectedState)
                 }
             }
-            .setNegativeButton("Скасувати", null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
     private fun showCommunitySelectionDialog(state: StateData) {
         val options = mutableListOf<Region>()
-        // Додаємо можливість обрати всю область
-        options.add(Region(state.id, "Вся область"))
+        // Add option to select the entire region
+        options.add(Region(state.id, getString(R.string.entire_region)))
         options.addAll(state.communities)
 
         val optionNames = options.map { it.name }.toTypedArray()
@@ -153,7 +153,7 @@ class SettingsActivity : AppCompatActivity() {
                 val fullName = if (which == 0) state.name else "${state.name}: ${selected.name}"
                 saveSelection(selected.id, fullName)
             }
-            .setNegativeButton("Назад") { _, _ ->
+            .setNegativeButton(R.string.back) { _, _ ->
                 showStateSelectionDialog()
             }
             .show()

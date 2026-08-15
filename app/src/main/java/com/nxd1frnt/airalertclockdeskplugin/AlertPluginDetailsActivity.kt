@@ -80,7 +80,7 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
 
     private fun updateUI() {
         val regionName = SirenSharedPreferences.getSelectedRegionName(this)
-        currentRegionTextView.text = "Регіон: $regionName"
+        currentRegionTextView.text = getString(R.string.region_prefix, regionName)
 
         val cachedText = SirenSharedPreferences.getChipText(this)
         val cachedIconName = SirenSharedPreferences.getChipIcon(this)

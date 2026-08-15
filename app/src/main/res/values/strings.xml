@@ -1,17 +1,22 @@
 <resources>
     <string name="app_name">Air Alert ClockDesk Plugin</string>
-    <string name="plugin_name">Повітряні тривоги</string>
-    <string name="plugin_description">Плагін для моніторингу тривог через API siren.pp.ua</string>
-    <string name="settings_title">Налаштування</string>
-    <string name="region_monitoring">Регіон для моніторингу</string>
-    <string name="not_selected">Не обрано</string>
-    <string name="click_to_change">Натисніть, щоб змінити</string>
-    <string name="appearance">Відображення</string>
-    <string name="show_no_alert">Показувати, коли немає тривоги</string>
-    <string name="api_footer">Плагін отримує дані з siren.pp.ua</string>
-    <string name="select_region_title">Оберіть регіон</string>
-    <string name="cancel">Скасувати</string>
-    <string name="status_title">Статус тривоги</string>
-    <string name="region_prefix">Регіон: %1$s</string>
-    <string name="close">Закрити</string>
+    <string name="plugin_name">Air Alerts</string>
+    <string name="plugin_description">Plugin for monitoring air alerts via siren.pp.ua API</string>
+    <string name="settings_title">Settings</string>
+    <string name="region_monitoring">Region for monitoring</string>
+    <string name="not_selected">Not selected</string>
+    <string name="click_to_change">Click to change</string>
+    <string name="appearance">Appearance</string>
+    <string name="show_no_alert">Show when there is no alert</string>
+    <string name="api_footer">Plugin retrieves data from siren.pp.ua</string>
+    <string name="select_region_title">Select region</string>
+    <string name="cancel">Cancel</string>
+    <string name="status_title">Alert Status</string>
+    <string name="region_prefix">Region: %1$s</string>
+    <string name="close">Close</string>
+    <string name="alert_active">Air Alert!</string>
+    <string name="all_clear">All Clear</string>
+    <string name="network_error">Network error</string>
+    <string name="entire_region">Entire region</string>
+    <string name="back">Back</string>
 </resources>

@@ -20,7 +20,7 @@ class AlertChipReceiver : BroadcastReceiver() {
         const val ACTION_REQUEST_DATA = "com.nxd1frnt.clockdesk2.ACTION_REQUEST_CHIP_DATA"
         const val ACTION_UPDATE_DATA = "com.nxd1frnt.clockdesk2.ACTION_UPDATE_CHIP_DATA"
         const val CLOCKDESK_PACKAGE = "com.nxd1frnt.clockdesk2"
-        const val UPDATE_INTERVAL_SEC = 60  // інтервал оновлення даних який ми просимо у ClockDesk
+        const val UPDATE_INTERVAL_SEC = 60  // update interval requested from ClockDesk
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -32,13 +32,13 @@ class AlertChipReceiver : BroadcastReceiver() {
                 try {
                     val selectedRegionId = SirenSharedPreferences.getSelectedRegionId(context)
                     if (selectedRegionId == null) {
-                        sendPushUpdate(context, "Оберіть регіон", "ic_question_circle", true)
+                        sendPushUpdate(context, context.getString(R.string.select_region_title), "ic_question_circle", true)
                         return@launch
                     }
 
-                    val (chipText, chipIcon, isAlarmActive) = performCheckLogic(selectedRegionId)
+                    val (chipText, chipIcon, isAlarmActive) = performCheckLogic(context, selectedRegionId)
 
-                    // Зберігаємо дані
+                    // Save data
                     SirenSharedPreferences.saveSirenState(context, chipText, chipIcon)
 
                     val userWantsVisibleAlways = SirenSharedPreferences.getShowstate(context)
@@ -47,8 +47,8 @@ class AlertChipReceiver : BroadcastReceiver() {
                     sendPushUpdate(context, chipText, chipIcon, visibility)
 
                 } catch (e: Exception) {
-                    Log.e("AlertChipReceiver", "Помилка оновлення", e)
-                    sendPushUpdate(context, "Помилка мережі", "ic_error_circle", true)
+                    Log.e("AlertChipReceiver", "Update error", e)
+                    sendPushUpdate(context, context.getString(R.string.network_error), "ic_error_circle", true)
                 } finally {
                     pendingResult.finish()
                 }
@@ -56,7 +56,7 @@ class AlertChipReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun performCheckLogic(selectedRegionId: String): Triple<String, String, Boolean> {
+    private fun performCheckLogic(context: Context, selectedRegionId: String): Triple<String, String, Boolean> {
         return try {
             val url = "https://siren.pp.ua/api/v3/alerts/$selectedRegionId"
             val connection = (URL(url).openConnection() as java.net.HttpURLConnection).apply {
@@ -72,12 +72,12 @@ class AlertChipReceiver : BroadcastReceiver() {
             val isAlarmActive = alertsArray.length() > 0
 
             if (isAlarmActive) {
-                Triple("Тривога!", "ic_alarm_on", true)
+                Triple(context.getString(R.string.alert_active), "ic_alarm_on", true)
             } else {
-                Triple("Все спокійно", "ic_alarm_off", false)
+                Triple(context.getString(R.string.all_clear), "ic_alarm_off", false)
             }
         } catch (e: Exception) {
-            Log.e("AlertChipReceiver", "Помилка мережевого запиту", e)
+            Log.e("AlertChipReceiver", "Network request error", e)
             throw e
         }
     }
@@ -91,7 +91,7 @@ class AlertChipReceiver : BroadcastReceiver() {
             putExtra("chip_icon_name", icon)
             putExtra("chip_click_activity", ".AlertPluginDetailsActivity")
 
-            // Просимо ClockDesk дьорнути плагін через UPDATE_INTERVAL_SEC секунд
+            // Ask ClockDesk to ping plugin after UPDATE_INTERVAL_SEC seconds
             putExtra("update_interval_seconds", UPDATE_INTERVAL_SEC)
         }
         context.sendBroadcast(responseIntent)

@@ -59,7 +59,7 @@ object SirenSharedPreferences {
     }
 
     fun getChipText(context: Context): String {
-        return getPrefs(context).getString(KEY_CHIP_TEXT, "Оберіть регіон") ?: "Оберіть регіон"
+        return getPrefs(context).getString(KEY_CHIP_TEXT, context.getString(R.string.select_region_title)) ?: context.getString(R.string.select_region_title)
     }
 
     fun getChipIcon(context: Context): String {
