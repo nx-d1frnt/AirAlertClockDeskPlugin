@@ -38,8 +38,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginBottom="16dp"
-                android:src="@drawable/ic_alarm_off"
-                app:tint="@color/md_theme_primary" />
+                android:src="@drawable/ic_alarm_off" />
 
             <TextView
                 android:id="@+id/status_text"
@@ -54,11 +53,43 @@
                 android:id="@+id/current_region_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/not_selected"
                 android:textAlignment="center"
                 android:alpha="0.7"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/threats_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    android:alpha="0.3"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:id="@+id/threats_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/active_threats_title"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:alpha="0.8"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/threats_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/close_button"

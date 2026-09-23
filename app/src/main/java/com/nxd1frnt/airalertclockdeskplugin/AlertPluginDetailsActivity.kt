@@ -17,6 +17,8 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
     private lateinit var currentRegionTextView: TextView
     private lateinit var statusTextView: TextView
     private lateinit var statusIcon: ImageView
+    private lateinit var threatsContainer: View
+    private lateinit var threatsList: android.widget.LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
@@ -58,6 +60,8 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
         currentRegionTextView = findViewById(R.id.current_region_text)
         statusTextView = findViewById(R.id.status_text)
         statusIcon = findViewById(R.id.status_icon)
+        threatsContainer = findViewById(R.id.threats_container)
+        threatsList = findViewById(R.id.threats_list)
         val closeButton = findViewById<Button>(R.id.close_button)
 
         updateUI()
@@ -90,6 +94,41 @@ class AlertPluginDetailsActivity : AppCompatActivity() {
         val iconResId = resources.getIdentifier(cachedIconName, "drawable", packageName)
         if (iconResId != 0) {
             statusIcon.setImageResource(iconResId)
+            if (cachedIconName == "ic_alarm_red" || cachedIconName == "ic_alarm_yellow") {
+                statusIcon.imageTintList = null
+            } else {
+                statusIcon.imageTintList = android.content.res.ColorStateList.valueOf(getColor(R.color.md_theme_primary))
+            }
+        }
+
+        val activeLevels = SirenSharedPreferences.getActiveAlertLevels(this)
+        if (activeLevels.isNotEmpty()) {
+            threatsContainer.visibility = View.VISIBLE
+            threatsList.removeAllViews()
+            val inflater = layoutInflater
+
+            for (threat in activeLevels) {
+                val itemView = inflater.inflate(R.layout.item_alert_level, threatsList, false)
+                val badge = itemView.findViewById<ImageView>(R.id.threat_badge)
+                val titleView = itemView.findViewById<TextView>(R.id.threat_level_title)
+                val timeView = itemView.findViewById<TextView>(R.id.threat_time)
+                val reasonView = itemView.findViewById<TextView>(R.id.threat_reason)
+
+                val badgeColor = when {
+                    threat.isRed -> getColor(R.color.alert_red)
+                    threat.isYellow -> getColor(R.color.alert_yellow)
+                    else -> getColor(R.color.md_theme_primary)
+                }
+                badge.imageTintList = android.content.res.ColorStateList.valueOf(badgeColor)
+
+                titleView.text = threat.getLocalizedTitle(this)
+                timeView.text = threat.getFormattedTime(this)
+                reasonView.text = threat.reason
+
+                threatsList.addView(itemView)
+            }
+        } else {
+            threatsContainer.visibility = View.GONE
         }
     }
 }

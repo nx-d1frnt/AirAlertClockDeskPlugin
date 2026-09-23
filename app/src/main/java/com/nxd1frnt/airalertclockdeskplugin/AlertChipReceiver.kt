@@ -67,14 +67,56 @@ class AlertChipReceiver : BroadcastReceiver() {
 
             val jsonArray = JSONArray(responseString)
             val regionData = jsonArray.getJSONObject(0)
-            val alertsArray = regionData.getJSONArray("activeAlerts")
+            val alertsArray = regionData.optJSONArray("activeAlerts") ?: JSONArray()
 
-            val isAlarmActive = alertsArray.length() > 0
+            val activeLevels = mutableListOf<AlertLevelItem>()
+            for (i in 0 until alertsArray.length()) {
+                val alertObj = alertsArray.getJSONObject(i)
+                val levelsArray = alertObj.optJSONArray("activeAlertLevels")
+                if (levelsArray != null) {
+                    for (j in 0 until levelsArray.length()) {
+                        val levelObj = levelsArray.getJSONObject(j)
+                        activeLevels.add(
+                            AlertLevelItem(
+                                level = levelObj.optString("alertLevel", ""),
+                                reason = levelObj.optString("reason", ""),
+                                createdAt = levelObj.optString("createdAt", "")
+                            )
+                        )
+                    }
+                }
+            }
 
-            if (isAlarmActive) {
-                Triple(context.getString(R.string.alert_active), "ic_alarm_on", true)
-            } else {
-                Triple(context.getString(R.string.all_clear), "ic_alarm_off", false)
+            // Cache active levels for Details activity
+            SirenSharedPreferences.saveActiveAlertLevels(context, activeLevels)
+            SirenSharedPreferences.saveLastNetworkRequestTime(context, System.currentTimeMillis())
+
+            val hasRed = activeLevels.any { it.isRed }
+            val hasYellow = activeLevels.any { it.isYellow }
+            val hasAlerts = alertsArray.length() > 0
+            val onlyRedAlerts = SirenSharedPreferences.getOnlyRedAlerts(context)
+
+            when {
+                hasRed -> {
+                    Triple(context.getString(R.string.missile_threat), "ic_alarm_red", true)
+                }
+                hasYellow -> {
+                    if (onlyRedAlerts) {
+                        Triple(context.getString(R.string.all_clear), "ic_alarm_off", false)
+                    } else {
+                        Triple(context.getString(R.string.drone_threat), "ic_alarm_yellow", true)
+                    }
+                }
+                hasAlerts -> {
+                    if (onlyRedAlerts) {
+                        Triple(context.getString(R.string.all_clear), "ic_alarm_off", false)
+                    } else {
+                        Triple(context.getString(R.string.alert_active), "ic_alarm_on", true)
+                    }
+                }
+                else -> {
+                    Triple(context.getString(R.string.all_clear), "ic_alarm_off", false)
+                }
             }
         } catch (e: Exception) {
             Log.e("AlertChipReceiver", "Network request error", e)

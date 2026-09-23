@@ -12,7 +12,8 @@ object SirenSharedPreferences {
     private const val KEY_SELECTED_REGION_ID = "selected_region_id"
     private const val KEY_SELECTED_REGION_NAME = "selected_region_name"
     private const val KEY_LAST_NETWORK_REQUEST_TIME = "last_network_request_time"
-
+    private const val KEY_ONLY_RED_ALERTS = "only_red_alerts"
+    private const val KEY_ACTIVE_ALERT_LEVELS = "active_alert_levels"
 
     private fun getPrefs(context: Context) =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -50,6 +51,29 @@ object SirenSharedPreferences {
     fun getShowstate(context: Context): Boolean {
         return getPrefs(context).getBoolean(KEY_SHOW_WHEN_NO_ALERT, true)
     }
+
+    fun saveOnlyRedAlerts(context: Context, onlyRedAlerts: Boolean) {
+        getPrefs(context).edit()
+            .putBoolean(KEY_ONLY_RED_ALERTS, onlyRedAlerts)
+            .apply()
+    }
+
+    fun getOnlyRedAlerts(context: Context): Boolean {
+        return getPrefs(context).getBoolean(KEY_ONLY_RED_ALERTS, false)
+    }
+
+    fun saveActiveAlertLevels(context: Context, items: List<AlertLevelItem>) {
+        val json = AlertLevelItem.toJsonArray(items)
+        getPrefs(context).edit()
+            .putString(KEY_ACTIVE_ALERT_LEVELS, json)
+            .apply()
+    }
+
+    fun getActiveAlertLevels(context: Context): List<AlertLevelItem> {
+        val json = getPrefs(context).getString(KEY_ACTIVE_ALERT_LEVELS, null)
+        return AlertLevelItem.fromJsonArray(json)
+    }
+
     fun getSelectedRegionId(context: Context): String? {
         return getPrefs(context).getString(KEY_SELECTED_REGION_ID, null)
     }
