@@ -19,4 +19,12 @@
     <string name="network_error">Network error</string>
     <string name="entire_region">Entire region</string>
     <string name="back">Back</string>
+    <string name="missile_threat">Missile threat</string>
+    <string name="drone_threat">Drone threat</string>
+    <string name="active_threats_title">Active threats</string>
+    <string name="only_red_alerts_title">Notify only on missile alerts (Red)</string>
+    <string name="only_red_alerts_subtitle">Ignore drone alerts (Yellow level)</string>
+    <string name="time_ago_min">%1$d min ago</string>
+    <string name="time_ago_hour">%1$d h ago</string>
+    <string name="time_just_now">just now</string>
 </resources>

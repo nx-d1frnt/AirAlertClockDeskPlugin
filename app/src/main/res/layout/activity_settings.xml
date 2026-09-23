@@ -79,6 +79,14 @@
         android:textSize="16sp"
         android:padding="16dp" />
 
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/only_red_alerts_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/only_red_alerts_title"
+        android:textSize="16sp"
+        android:padding="16dp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"

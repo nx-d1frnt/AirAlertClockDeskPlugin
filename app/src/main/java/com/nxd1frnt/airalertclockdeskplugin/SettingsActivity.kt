@@ -19,6 +19,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var currentRegionTextView: TextView
     private lateinit var showWhenNoAlertSwitch: MaterialSwitch
+    private lateinit var onlyRedAlertsSwitch: MaterialSwitch
     
     private val statesData = mutableListOf<StateData>()
 
@@ -39,6 +40,7 @@ class SettingsActivity : AppCompatActivity() {
 
         currentRegionTextView = findViewById(R.id.current_region_text)
         showWhenNoAlertSwitch = findViewById(R.id.show_when_no_alert_switch)
+        onlyRedAlertsSwitch = findViewById(R.id.only_red_alerts_switch)
         val selectRegionCard = findViewById<MaterialCardView>(R.id.select_region_card)
 
         updateUI()
@@ -51,11 +53,17 @@ class SettingsActivity : AppCompatActivity() {
         showWhenNoAlertSwitch.setOnCheckedChangeListener { _, isChecked ->
             SirenSharedPreferences.saveShowstate(this, isChecked)
         }
+
+        onlyRedAlertsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            SirenSharedPreferences.saveOnlyRedAlerts(this, isChecked)
+            SirenSharedPreferences.saveLastNetworkRequestTime(applicationContext, 0L)
+        }
     }
 
     private fun updateUI() {
         currentRegionTextView.text = SirenSharedPreferences.getSelectedRegionName(this)
         showWhenNoAlertSwitch.isChecked = SirenSharedPreferences.getShowstate(this)
+        onlyRedAlertsSwitch.isChecked = SirenSharedPreferences.getOnlyRedAlerts(this)
     }
 
     private fun loadRegionsFromJson() {

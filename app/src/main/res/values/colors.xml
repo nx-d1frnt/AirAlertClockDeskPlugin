@@ -1,5 +1,9 @@
 <resources>
     <color name="md_theme_primary">#37618E</color>
+    <color name="alert_red">#E53935</color>
+    <color name="alert_red_container">#FFEBEE</color>
+    <color name="alert_yellow">#F57F17</color>
+    <color name="alert_yellow_container">#FFFDE7</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#D2E4FF</color>
     <color name="md_theme_onPrimaryContainer">#001D37</color>
